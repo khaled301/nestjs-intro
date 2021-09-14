@@ -13,14 +13,10 @@ import { ProductsService } from './products/products.service';
 import { ItemSchema } from './items/schemas/item.schema';
 import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
-import config from './config/keys';
-import { UsersController } from './users/users.controller';
-import { UsersService } from './users/users.service';
-
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot(config.mongoURI), MongooseModule.forFeature([{ name: 'Item', schema: ItemSchema}]),
+    MongooseModule.forRoot(process.env.MONGO_URI), MongooseModule.forFeature([{ name: 'Item', schema: ItemSchema}]),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.MYSQL_DB_HOST,
@@ -33,7 +29,7 @@ import { UsersService } from './users/users.service';
     }),
     ProductsModule, 
     ItemsModule, 
-    UsersModule, 
+    UsersModule
   ],
   controllers: [AppController, ItemsController, ProductsController],
   providers: [AppService, ItemsService, ProductsService],
